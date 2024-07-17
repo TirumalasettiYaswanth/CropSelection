@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil pH Analyzer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-image: url("images/agriculture.gif");
+            background-size: cover; 
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Soil pH Analyzer</h1>
+
+    <form onsubmit="analyzePH(); return false;">
+        <label for="phInput">Enter pH value (0-15):</label>
+        <input type="number" id="phInput" step="0.1" min="0" max="15" placeholder="Enter pH value" required>
+
+        <button type="submit" class="btn btn-primary">Analyze pH</button>
+    </form>
+
+    <div id="result"></div>
+
+    <div id="google_translate_element"></div>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        function analyzePH() {
+            var phValue = parseFloat(document.getElementById('phInput').value);
+
+            if (isNaN(phValue) || phValue < 0 || phValue > 15) {
+                alert("Please enter a valid pH value between 0 and 15.");
+                return;
+            }
+
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (phValue >= 0 && phValue <= 4) {
+                alert("The soil is too acidic. Click OK to see the adjustment solution.");
+                window.location.href = 'AcidicpHAdjustmentSolutions.html';
+            } else if (phValue >= 4.1 && phValue <= 8) {
+                window.location.href = 'crops.html?ph=';
+            } else if (phValue >= 8.1 && phValue <= 15) {
+                alert("The soil is too alkaline. Click OK to see the adjustment solution.");
+                window.location.href = 'AlkalinepHAdjustmentSolutions.html';
+            }
+        }
+    </script>
+
+</body>
+</html>
